@@ -16,3 +16,4 @@ flask
 flask_limiter
 tornado
 pymongo
+tqdm

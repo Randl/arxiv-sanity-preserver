@@ -31,14 +31,15 @@ for pid,j in db.items():
       with open(fname, 'wb') as fp:
           shutil.copyfileobj(req, fp)
       time.sleep(0.05 + random.uniform(0,0.1))
+      print('%d/%d of %d downloaded ok.' % (numok, numtot, len(db)))
     else:
-      print('%s exists, skipping' % (fname, ))
+      pass
+      # print('%s exists, skipping' % (fname, ))
     numok+=1
   except Exception as e:
     print('error downloading: ', pdf_url)
     print(e)
   
-  print('%d/%d of %d downloaded ok.' % (numok, numtot, len(db)))
   
 print('final number of papers downloaded okay: %d/%d' % (numok, len(db)))
 

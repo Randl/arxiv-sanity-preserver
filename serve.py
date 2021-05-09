@@ -12,7 +12,7 @@ from hashlib import md5
 from flask import Flask, request, session, url_for, redirect, \
      render_template, abort, g, flash, _app_ctx_stack
 from flask_limiter import Limiter
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 import pymongo
 
 from utils import safe_pickle_dump, strip_version, isvalidid, Config
@@ -644,7 +644,7 @@ if __name__ == "__main__":
    
   parser = argparse.ArgumentParser()
   parser.add_argument('-p', '--prod', dest='prod', action='store_true', help='run in prod?')
-  parser.add_argument('-r', '--num_results', dest='num_results', type=int, default=200, help='number of results to return per query')
+  parser.add_argument('-r', '--num_results', dest='num_results', type=int, default=1000, help='number of results to return per query')
   parser.add_argument('--port', dest='port', type=int, default=5000, help='port to serve on')
   args = parser.parse_args()
   print(args)

@@ -28,7 +28,7 @@ for i,f in enumerate(files): # there was a ,start=1 here that I removed, can't r
 
   txt_basename = f + '.txt'
   if txt_basename in have:
-    print('%d/%d skipping %s, already exists.' % (i, len(files), txt_basename, ))
+    # print('%d/%d skipping %s, already exists.' % (i, len(files), txt_basename, ))
     continue
 
   pdf_path = os.path.join(Config.pdf_dir, f)
