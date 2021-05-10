@@ -21,12 +21,14 @@ if not os.path.exists(Config.thumbs_dir): os.makedirs(Config.thumbs_dir)
 if not os.path.exists(Config.tmp_dir): os.makedirs(Config.tmp_dir)
 
 # fetch all pdf filenames in the pdf directory
-files_in_pdf_dir = os.listdir(pdf_dir)
+files_in_pdf_dir = list()
+for (dirpath, dirnames, filenames) in os.walk(Config.pdf_dir):
+    files_in_pdf_dir += [os.path.join(dirpath, file) for file in filenames]
 pdf_files = [x for x in files_in_pdf_dir if x.endswith('.pdf')]  # filter to just pdfs, just in case
 
 # iterate over all pdf files and create the thumbnails
-for i, p in enumerate(pdf_files):
-    pdf_path = os.path.join(pdf_dir, p)
+for i, pdf_path in enumerate(pdf_files):
+    p = os.path.split(pdf_path)[-1]
     thumb_path = os.path.join(Config.thumbs_dir, p + '.jpg')
 
     if os.path.isfile(thumb_path):

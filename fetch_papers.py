@@ -114,7 +114,7 @@ def fetch_kaggle(args, db):
     with jsonlines.open('kaggle/arxiv-metadata-oai-snapshot.json') as reader:
         for paper in reader:
             categories = set(paper['categories'].split())
-            if len(categories.intersection(cat_set)) > 0:
+            if args.categories is None or len(categories.intersection(cat_set)) > 0:
                 paper['_version'] = len(paper['versions'])
                 paper['updated'] = paper['versions'][-1]['created']
                 paper['published'] = paper['versions'][0]['created']
@@ -147,7 +147,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--categories', type=str,
                         default=['cs.CV', 'cs.AI', 'cs.LG', 'cs.CL', 'cs.NE', 'stat.ML', 'cond-mat.dis-nn'],
-                        help='query used for arxiv API. See http://arxiv.org/help/api/user-manual#detailed_examples')
+                        help='categories to search for')
     parser.add_argument('--search-query', type=str,
                         default='cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML+OR+cat:cond-mat.dis-nn',
                         help='query used for arxiv API. See http://arxiv.org/help/api/user-manual#detailed_examples')
