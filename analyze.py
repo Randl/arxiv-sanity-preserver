@@ -46,7 +46,7 @@ v = TfidfVectorizer(input='content',
                     token_pattern=r'(?u)\b[a-zA-Z_][a-zA-Z0-9_]+\b',
                     ngram_range=(1, 2), max_features=max_features,
                     norm='l2', use_idf=True, smooth_idf=True, sublinear_tf=True,
-                    max_df=1.0, min_df=1)
+                    max_df=1.0, min_df=1, dtype=np.float32)
 
 
 # create an iterator object to conserve memory

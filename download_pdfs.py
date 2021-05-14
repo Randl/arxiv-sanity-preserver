@@ -8,8 +8,16 @@ from urllib.request import urlopen
 from utils import Config
 
 timeout_secs = 10  # after this many seconds we give up on a paper
-if not os.path.exists(Config.pdf_dir): os.makedirs(Config.pdf_dir)
-have = set(os.listdir(Config.pdf_dir))  # get list of all pdfs we already have
+if not os.path.exists(Config.pdf_dir):
+    os.makedirs(Config.pdf_dir)
+
+print('Reading pdf list')
+files = list()
+for (dirpath, dirnames, filenames) in os.walk(Config.pdf_dir):
+    files += [os.path.join(dirpath, file) for file in filenames]
+
+have = set([os.path.split(pdf_path)[-1] for pdf_path in files])  # get list of all pdfs we already have
+print('Read pdf list')
 
 numok = 0
 numtot = 0

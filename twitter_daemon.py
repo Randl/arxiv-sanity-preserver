@@ -104,13 +104,14 @@ while True:
         last_db_load = time.time()
         print('(re-) loading the paper database', Config.db_path)
         db = pickle.load(open(Config.db_path, 'rb'))
+        dp_pids = set(db.keys())
 
     # fetch the latest mentioning arxiv.org
     results = get_latest_or_loop('arxiv.org')
     to_insert = []
     for r in results:
         arxiv_pids = extract_arxiv_pids(r)
-        arxiv_pids = [p for p in arxiv_pids if p in db]  # filter to those that are in our paper db
+        arxiv_pids = [p for p in arxiv_pids if p in dp_pids]  # filter to those that are in our paper db
         if not arxiv_pids: continue  # nothing we know about here, lets move on
         if tweets.find_one({'id': r.id}): continue  # we already have this item
         if r.user.screen_name in banned: continue  # banned user, very likely a bot

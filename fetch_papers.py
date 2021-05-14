@@ -126,6 +126,7 @@ def fetch_kaggle(args, db):
                                    'rel': 'related', 'type': 'application/pdf'}]
                 rawid = paper['_rawid'] = paper['id']
                 paper['tags'] = [{'term': x} for x in categories]
+                paper['arxiv_primary_category'] = paper['tags'][0]
                 paper['summary'] = paper['abstract']
 
                 # add to our database if we didn't have it before, or if this is a new version
