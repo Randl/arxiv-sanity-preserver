@@ -23,9 +23,10 @@ if not os.path.exists(Config.tmp_dir): os.makedirs(Config.tmp_dir)
 
 # fetch all pdf filenames in the pdf directory
 db = pickle.load(open(Config.db_path, 'rb'))
+db_filenames = set([([x['href'] for x in db[j]['links'] if x['type'] == 'application/pdf'][0] + '.pdf').split('/')[-1] for j in db])
 files_in_pdf_dir = list()
 for (dirpath, dirnames, filenames) in os.walk(Config.pdf_dir):
-    files_in_pdf_dir += [os.path.join(dirpath, file) for file in filenames if file.split('v')[0] in db]
+    files_in_pdf_dir += [os.path.join(dirpath, file) for file in filenames if file in db_filenames]
 pdf_files = [x for x in files_in_pdf_dir if x.endswith('.pdf')]  # filter to just pdfs, just in case
 
 # iterate over all pdf files and create the thumbnails

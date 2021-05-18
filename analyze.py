@@ -25,6 +25,7 @@ n = 0
 for pid, j in db.items():
     n += 1
     idvv = '%sv%d' % (j['_rawid'], j['_version'])
+    idvv = idvv.split('/')[-1] # older papers
     txt_path = os.path.join('data', 'txt', idvv) + '.pdf.txt'
     if os.path.isfile(txt_path):  # some pdfs dont translate to txt
         with open(txt_path, 'r') as f:
@@ -64,6 +65,10 @@ train_txt_paths = train_txt_paths[:min(len(train_txt_paths), max_train)]  # crop
 print("training on %d documents..." % (len(train_txt_paths),))
 train_corpus = make_corpus(train_txt_paths)
 v.fit(train_corpus)
+
+# TODO: split into train, fit (in parts), nn calc (on disk)
+# TODO: add support to re-fit only new vectors
+
 
 # transform
 print("transforming %d documents..." % (len(txt_paths),))

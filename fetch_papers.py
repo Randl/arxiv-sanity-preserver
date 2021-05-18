@@ -124,6 +124,7 @@ def fetch_kaggle(args, db):
                                    'href': 'http://arxiv.org/pdf/{}{}'.format(paper['id'],
                                                                               paper['versions'][-1]['version']),
                                    'rel': 'related', 'type': 'application/pdf'}]
+                paper['link'] = 'http://arxiv.org/abs/{}{}'.format(paper['id'], paper['versions'][-1]['version'])
                 rawid = paper['_rawid'] = paper['id']
                 paper['tags'] = [{'term': x} for x in categories]
                 paper['arxiv_primary_category'] = paper['tags'][0]
@@ -162,6 +163,7 @@ if __name__ == "__main__":
                         help='break out early if all returned query papers are already in db? 1=yes, 0=no')
     args = parser.parse_args()
 
+    #args.search_query = '%28' + '+OR+'.join(args.categories) + '%29' + args.search_query
     # lets load the existing database to memory
     try:
         db = pickle.load(open(Config.db_path, 'rb'))

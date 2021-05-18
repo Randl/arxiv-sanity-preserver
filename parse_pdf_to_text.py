@@ -25,9 +25,10 @@ if not os.path.exists(Config.txt_dir):
 have = set(os.listdir(Config.txt_dir))
 
 db = pickle.load(open(Config.db_path, 'rb'))
+db_filenames = set([([x['href'] for x in db[j]['links'] if x['type'] == 'application/pdf'][0] + '.pdf').split('/')[-1] for j in db])
 files = list()
 for (dirpath, dirnames, filenames) in os.walk(Config.pdf_dir):
-    files += [os.path.join(dirpath, file) for file in filenames if file.split('v')[0] in db]
+    files += [os.path.join(dirpath, file) for file in filenames if file in db_filenames]
 for i, pdf_path in enumerate(files):  # there was a ,start=1 here that I removed, can't remember why it would be there. shouldn't be, i think.
     f = os.path.split(pdf_path)[-1]
 
